@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Votaí — Simulador Eleitoral</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="navbar">
+        <a href="#" class="logo">Votaí<span>.</span></a>
+
+        <nav>
+            <button class="nav-btn active" data-page="votar">Urna</button>
+            <button class="nav-btn" data-page="candidatos">Candidatos</button>
+            <button class="nav-btn" data-page="pesquisar">Pesquisar</button>
+        </nav>
+
+        <div class="status">
+            <span class="status-dot"></span> SIMULAÇÃO
+        </div>
+    </header>
+
+    <main>
+
+        <!-- PÁGINA DE VOTAÇÃO -->
+        <section id="votar" class="page active">
+            <div class="section-heading">
+                <div>
+                    <span class="eyebrow">SISTEMA ELEITORAL</span>
+                    <h1>Urna eletrônica</h1>
+                    <p>Digite o número do candidato para iniciar a votação.</p>
+                </div>
+                <span class="live-label">● SISTEMA ONLINE</span>
+            </div>
+
+            <div class="voting-layout">
+
+                <div class="urna">
+                    <div class="urna-top">
+                        <div class="urna-brand">
+                            <div class="brand-icon">U</div>
+                            <div>
+                                <strong>JUSTIÇA ELEITORAL</strong>
+                                <small>SIMULADOR DE VOTAÇÃO</small>
+                            </div>
+                        </div>
+                        <span class="urna-version">UE-2026</span>
+                    </div>
+
+                    <div class="urna-screen">
+                        <div class="screen-header">
+                            <span>JUSTIÇA ELEITORAL</span>
+                            <span>VOTAÇÃO</span>
+                        </div>
+
+                        <div id="screen-content">
+                            <div class="screen-title">SEU VOTO PARA</div>
+                            <div class="office">CANDIDATO</div>
+
+                            <div class="number-area">
+                                <div id="number-display" class="number-display">
+                                    <span class="empty-digit"></span>
+                                    <span class="empty-digit"></span>
+                                </div>
+                            </div>
+
+                            <div id="candidate-info" class="candidate-info">
+                                <div class="candidate-placeholder">
+                                    AGUARDANDO<br>NUMERAÇÃO
+                                </div>
+                            </div>
+
+                            <div id="screen-message" class="screen-message">
+                                DIGITE O NÚMERO DO CANDIDATO
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="keyboard-area">
+                        <div class="keyboard">
+                            <div class="keyboard-numbers">
+                                <button class="key" data-key="1">1</button>
+                                <button class="key" data-key="2">2</button>
+                                <button class="key" data-key="3">3</button>
+                                <button class="key" data-key="4">4</button>
+                                <button class="key" data-key="5">5</button>
+                                <button class="key" data-key="6">6</button>
+                                <button class="key" data-key="7">7</button>
+                                <button class="key" data-key="8">8</button>
+                                <button class="key" data-key="9">9</button>
+                                <button class="key zero" data-key="0">0</button>
+                            </div>
+
+                            <div class="keyboard-actions">
+                                <button id="blank-btn" class="key-action blank">
+                                    BRANCO
+                                </button>
+                                <button id="correct-btn" class="key-action correct">
+                                    CORRIGE
+                                </button>
+                                <button id="confirm-btn" class="key-action confirm">
+                                    CONFIRMA
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="urna-bottom">
+                        <span>SIMULADOR DE URNA ELETRÔNICA</span>
+                        <span>© 2026</span>
+                    </div>
+                </div>
+
+                <aside class="voting-info">
+                    <div class="info-card">
+                        <span class="eyebrow">INSTRUÇÕES</span>
+                        <h3>Como votar?</h3>
+                        <ol>
+                            <li>Digite o número do candidato.</li>
+                            <li>Confira o nome, partido e foto.</li>
+                            <li>Pressione CONFIRMA para registrar.</li>
+                        </ol>
+                    </div>
+
+                    <div class="info-card">
+                        <span class="eyebrow">RESULTADO PARCIAL</span>
+                        <div class="stat-number" id="total-votes">0</div>
+                        <p>Votos registrados</p>
+                    </div>
+
+                    <div class="info-card security-card">
+                        <span class="security-icon">✓</span>
+                        <div>
+                            <strong>Votação simulada</strong>
+                            <p>Os votos são armazenados localmente neste navegador.</p>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <!-- PÁGINA DE CANDIDATOS -->
+        <section id="candidatos" class="page">
+            <div class="section-heading">
+                <div>
+                    <span class="eyebrow">GERENCIAMENTO</span>
+                    <h1>Candidatos</h1>
+                    <p>Cadastre e gerencie os candidatos da simulação.</p>
+                </div>
+                <button class="primary-btn" id="toggle-form">
+                    + Novo candidato
+                </button>
+            </div>
+
+            <div id="candidate-form-container" class="form-container hidden">
+                <h2>Cadastrar candidato</h2>
+
+                <form id="candidate-form">
+                    <div class="form-grid">
+                        <div class="field">
+                            <label for="candidate-name">Nome completo</label>
+                            <input type="text" id="candidate-name" placeholder="Ex: João da Silva" required>
+                        </div>
+
+                        <div class="field">
+                            <label for="candidate-party">Partido</label>
+                            <input type="text" id="candidate-party" placeholder="Ex: Partido Verde" required>
+                        </div>
+
+                        <div class="field">
+                            <label for="candidate-number">Número</label>
+                            <input type="text" id="candidate-number" placeholder="2, 4 ou 6 dígitos" inputmode="numeric"
+                                required>
+                            <small>O número deve ter exatamente 2, 4 ou 6 dígitos.</small>
+                        </div>
+
+                        <div class="field">
+                            <label>Foto do candidato</label>
+
+                            <div class="upload-area" id="upload-area">
+                                <input type="file" id="candidate-photo" accept="image/*" hidden>
+
+                                <div id="upload-content">
+                                    <div class="upload-icon">＋</div>
+                                    <strong>Arraste uma imagem aqui</strong>
+                                    <span>ou clique para selecionar</span>
+                                    <small>PNG, JPG ou WEBP</small>
+                                </div>
+                            </div>
+
+                            <div class="url-input">
+                                <input type="url" id="candidate-photo-url" placeholder="Ou cole a URL da imagem">
+                                <button type="button" id="load-image-url">OK</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="photo-preview" class="photo-preview hidden">
+                        <img id="preview-image" alt="Prévia da foto">
+                        <span>Pré-visualização</span>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="secondary-btn" id="cancel-form">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="primary-btn">
+                            Cadastrar candidato
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="list-header">
+                <h2>Candidatos cadastrados</h2>
+                <span id="candidate-count">0 candidatos</span>
+            </div>
+
+            <div id="candidate-list" class="candidate-grid"></div>
+        </section>
+
+        <!-- PÁGINA DE PESQUISA -->
+        <section id="pesquisar" class="page">
+            <div class="section-heading">
+                <div>
+                    <span class="eyebrow">CONSULTA ELEITORAL</span>
+                    <h1>Pesquisar candidatos</h1>
+                    <p>Encontre candidatos pelo nome, partido ou número.</p>
+                </div>
+            </div>
+
+            <div class="search-box">
+                <span>⌕</span>
+                <input type="text" id="search-input" placeholder="Pesquisar candidato...">
+                <button id="clear-search">×</button>
+            </div>
+
+            <div id="search-results" class="candidate-grid"></div>
+        </section>
+
+        <!-- RODAPÉ DE RESULTADOS -->
+        <section class="results-section">
+            <div class="results-heading">
+                <div>
+                    <span class="eyebrow">ACOMPANHAMENTO</span>
+                    <h2>Candidatos com mais votos</h2>
+                </div>
+                <span class="results-tag">ATUALIZAÇÃO AUTOMÁTICA</span>
+            </div>
+
+            <div id="ranking-list" class="ranking-list"></div>
+
+            <div class="results-footer">
+                <div>
+                    <span class="eyebrow">TOTAL DE VOTOS</span>
+                    <strong id="ranking-total">0</strong>
+                </div>
+                <div>
+                    <span class="eyebrow">VOTOS EM BRANCO</span>
+                    <strong id="blank-votes">0</strong>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <span>URNA<span class="green">.</span> SIMULADOR ELEITORAL</span>
+        <span>Projeto demonstrativo • 2026</span>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
