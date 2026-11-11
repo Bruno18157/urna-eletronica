@@ -36,10 +36,13 @@ Não é necessário instalar dependências ou configurar um servidor.
 
 ```text
 votai/
+├── assets/
+│   └── audio/
+│       ├── beep.mp3
+│       └── confirm.mp3
 ├── index.html
 ├── style.css
-├── script.js
-└── README.md
+└── script.js
 ```
 
 ## Armazenamento
