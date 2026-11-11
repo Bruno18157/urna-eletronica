@@ -38,13 +38,8 @@ Não é necessário instalar dependências ou configurar um servidor.
 urna-eletronica/
 ├── assets/
 │   └── audio/
-<<<<<<< HEAD
 │       ├── confirmar.mp3
 │       └── tecla.mp3
-=======
-│       ├── tecla.mp3
-│       └── confirmar.mp3
->>>>>>> bc44314836f6d3b8b54dc96dc2fe1e1b96e1c5ef
 ├── index.html
 ├── script.js
 └── style.css
