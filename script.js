@@ -254,8 +254,8 @@ $("candidate-form").addEventListener("submit", event => {
     const party = $("candidate-party").value.trim();
     const number = $("candidate-number").value.trim();
 
-    if (number.length < 1 || number.length > 6) {
-        alert("O número deve ter até 6 dígitos.");
+    if (number.length < 2 || number.length > 6) {
+        alert("O número deve ter entre 2 e 6 dígitos.");
         return;
     }
 
