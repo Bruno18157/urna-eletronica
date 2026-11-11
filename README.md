@@ -38,8 +38,13 @@ Não é necessário instalar dependências ou configurar um servidor.
 votai/
 ├── assets/
 │   └── audio/
+<<<<<<< HEAD
 │       ├── beep.mp3
 │       └── confirm.mp3
+=======
+│       ├── tecla.mp3
+│       └── confirmar.mp3
+>>>>>>> c9de8a2e515678768920752bf4a5227bab3d0676
 ├── index.html
 ├── style.css
 └── script.js
