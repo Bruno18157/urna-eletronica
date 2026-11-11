@@ -53,62 +53,23 @@ function placeholderPhoto() {
 }
 
 // ======================================
-// EFEITOS SONOROS
+// EFEITOS SONOROS PERSONALIZADOS
 // ======================================
 
-let audioContext;
+const keySound = $("key-sound");
+const confirmSound = $("confirm-sound");
 
 function playSound(type = "key") {
-    try {
-        audioContext ||= new (
-            window.AudioContext || window.webkitAudioContext
-        )();
+    const audio = type === "confirm" ? confirmSound : keySound;
 
-        if (audioContext.state === "suspended") {
-            audioContext.resume();
-        }
+    if (!audio) return;
 
-        const oscillator = audioContext.createOscillator();
-        const gain = audioContext.createGain();
+    audio.pause();
+    audio.currentTime = 0;
 
-        oscillator.connect(gain);
-        gain.connect(audioContext.destination);
-
-        const sounds = {
-            key: { frequency: 650, duration: 0.06 },
-            correct: { frequency: 350, duration: 0.12 },
-            confirm: { frequency: 850, duration: 0.25 },
-            error: { frequency: 180, duration: 0.2 },
-            finish: { frequency: 1000, duration: 0.45 },
-            blank: { frequency: 450, duration: 0.15 }
-        };
-
-        const sound = sounds[type] || sounds.key;
-
-        oscillator.frequency.setValueAtTime(
-            sound.frequency,
-            audioContext.currentTime
-        );
-
-        if (type === "finish") {
-            oscillator.frequency.exponentialRampToValueAtTime(
-                1300,
-                audioContext.currentTime + sound.duration
-            );
-        }
-
-        gain.gain.setValueAtTime(0.12, audioContext.currentTime);
-        gain.gain.exponentialRampToValueAtTime(
-            0.001,
-            audioContext.currentTime + sound.duration
-        );
-
-        oscillator.start();
-        oscillator.stop(audioContext.currentTime + sound.duration);
-
-    } catch (error) {
-        console.warn("Áudio indisponível.");
-    }
+    audio.play().catch(error => {
+        console.warn("Não foi possível reproduzir o áudio:", error);
+    });
 }
 
 // ======================================
@@ -293,8 +254,8 @@ $("candidate-form").addEventListener("submit", event => {
     const party = $("candidate-party").value.trim();
     const number = $("candidate-number").value.trim();
 
-    if (![2, 4, 6].includes(number.length)) {
-        alert("O número precisa ter 2, 4 ou 6 dígitos.");
+    if (number.length < 1 || number.length > 6) {
+        alert("O número deve ter até 6 dígitos.");
         return;
     }
 
@@ -433,8 +394,8 @@ function renderSearch() {
         $("search-results").innerHTML = `
             <div class="empty-state">
                 ${candidates.length
-                    ? "Nenhum candidato encontrado."
-                    : "Nenhum candidato cadastrado."}
+                ? "Nenhum candidato encontrado."
+                : "Nenhum candidato cadastrado."}
             </div>
         `;
         return;
@@ -534,8 +495,8 @@ function updateVotingScreen() {
         info.innerHTML = `
             <div class="candidate-placeholder">
                 ${possible
-                    ? "NUMERAÇÃO PARCIAL<br>CONTINUE DIGITANDO"
-                    : "CANDIDATO NÃO ENCONTRADO"}
+                ? "NUMERAÇÃO PARCIAL<br>CONTINUE DIGITANDO"
+                : "CANDIDATO NÃO ENCONTRADO"}
             </div>
         `;
 
@@ -576,7 +537,7 @@ document.querySelectorAll("[data-key]").forEach(button => {
 $("correct-btn").addEventListener("click", () => {
     if (votingFinished) return;
 
-    playSound("correct");
+    playSound("key");
     resetVoting();
 });
 
@@ -590,7 +551,7 @@ $("blank-btn").addEventListener("click", () => {
         return;
     }
 
-    playSound("blank");
+    playSound("key");
 
     currentNumber = "";
     selectedCandidate = null;
@@ -599,14 +560,12 @@ $("blank-btn").addEventListener("click", () => {
     updateVotingScreen();
 });
 
-// Confirmar
+// Confirmar: registra o voto imediatamente, sem janela de confirmação.
 
 $("confirm-btn").addEventListener("click", () => {
     if (votingFinished) return;
 
     if (blankPending) {
-        if (!confirm("Confirma seu VOTO EM BRANCO?")) return;
-
         blankVotes++;
 
         try {
@@ -624,19 +583,9 @@ $("confirm-btn").addEventListener("click", () => {
     const candidate = findCandidate(currentNumber);
 
     if (!candidate) {
-        playSound("error");
         alert("Número inválido! Verifique a numeração.");
         return;
     }
-
-    const confirmed = confirm(
-        `CONFIRMAR VOTO?\n\n` +
-        `Candidato: ${candidate.name}\n` +
-        `Partido: ${candidate.party}\n` +
-        `Número: ${candidate.number}`
-    );
-
-    if (!confirmed) return;
 
     candidate.votes++;
 
@@ -651,19 +600,12 @@ $("confirm-btn").addEventListener("click", () => {
     finishVoting();
 });
 
-// Finalizar
+// Finalizar: toca o som e prepara a urna para o próximo voto.
 
 function finishVoting() {
-    votingFinished = true;
-
-    playSound("finish");
-
-    updateVotingScreen();
+    playSound("confirm");
     updateResults();
-
-    setTimeout(() => {
-        resetVoting();
-    }, 2500);
+    resetVoting();
 }
 
 // ======================================
@@ -736,7 +678,7 @@ function updateResults() {
 // ======================================
 
 document.addEventListener("keydown", event => {
-    if (!$("#votar")?.classList.contains("active")) return;
+    if (!$("votar")?.classList.contains("active")) return;
 
     if (event.target.matches("input, textarea")) return;
 
@@ -745,7 +687,7 @@ document.addEventListener("keydown", event => {
     }
 
     if (event.key === "Backspace") {
-        playSound("correct");
+        playSound("key");
         resetVoting();
     }
 
