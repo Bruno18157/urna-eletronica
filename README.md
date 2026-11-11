@@ -35,19 +35,14 @@ Não é necessário instalar dependências ou configurar um servidor.
 ## Estrutura do projeto
 
 ```text
-votai/
+urna-eletronica/
 ├── assets/
 │   └── audio/
-<<<<<<< HEAD
-│       ├── beep.mp3
-│       └── confirm.mp3
-=======
-│       ├── tecla.mp3
-│       └── confirmar.mp3
->>>>>>> c9de8a2e515678768920752bf4a5227bab3d0676
+│       ├── confirmar.mp3
+│       └── tecla.mp3
 ├── index.html
-├── style.css
-└── script.js
+├── script.js
+└── style.css
 ```
 
 ## Armazenamento

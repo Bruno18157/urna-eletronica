@@ -26,7 +26,8 @@ body {
     min-height: 100vh;
 }
 
-button, input {
+button,
+input {
     font: inherit;
 }
 
@@ -55,7 +56,8 @@ button {
     text-decoration: none;
 }
 
-.logo span, .green {
+.logo span,
+.green {
     color: var(--green);
 }
 
@@ -76,7 +78,8 @@ button {
     transition: .2s;
 }
 
-.nav-btn:hover, .nav-btn.active {
+.nav-btn:hover,
+.nav-btn.active {
     color: var(--green);
     border-bottom-color: var(--green);
 }
@@ -114,8 +117,15 @@ main {
 }
 
 @keyframes appear {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .section-heading {
@@ -146,7 +156,8 @@ h1 {
     font-size: 13px;
 }
 
-.live-label, .results-tag {
+.live-label,
+.results-tag {
     font-family: 'DM Mono', monospace;
     font-size: 10px;
     color: var(--green);
@@ -432,7 +443,7 @@ h1 {
     letter-spacing: -2px;
 }
 
-.info-card > p {
+.info-card>p {
     color: var(--muted);
     font-size: 11px;
     margin-top: 5px;
@@ -469,7 +480,8 @@ h1 {
 
 /* FORMULÁRIO */
 
-.primary-btn, .secondary-btn {
+.primary-btn,
+.secondary-btn {
     border-radius: 4px;
     padding: 13px 18px;
     font-size: 12px;
