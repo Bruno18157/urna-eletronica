@@ -696,6 +696,28 @@ document.addEventListener("keydown", event => {
     }
 });
 
+$("reset-votes-btn")?.addEventListener("click", () => {
+    const confirmar = confirm(
+        "ATENÇÃO!\n\nTem certeza que deseja ZERAR TODOS OS VOTOS?\n\nEssa ação apagará a votação de todos os candidatos e os votos em branco."
+    );
+
+    if (!confirmar) return;
+
+    candidates.forEach(candidate => {
+        candidate.votes = 0;
+    });
+
+    blankVotes = 0;
+
+    localStorage.setItem("candidates", JSON.stringify(candidates));
+    localStorage.setItem("blankVotes", blankVotes);
+
+    updateResults();
+    renderCandidates();
+
+    alert("Todos os votos foram zerados!");
+});
+
 // ======================================
 // INICIALIZAÇÃO
 // ======================================
